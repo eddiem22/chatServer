@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [
+        ""
+      ],
+      "stopAtEntry": true,
+      "cwd": "/Users/eddiem/Desktop/classes/networking class/Networking Assignment 2 Eduard Marcencov",
+      "environment": [],
+      "program": "/Users/eddiem/Desktop/classes/networking class/Networking Assignment 2 Eduard Marcencov/build/Debug/outDebug",
+      "internalConsoleOptions": "openOnSessionStart",
+      "MIMode": "lldb",
+      "externalConsole": true
+    }
+  ]
+}

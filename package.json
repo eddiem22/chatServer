@@ -1,0 +1,15 @@
+{
+  "name": "networking-assignment-2-eduard-marcencov",
+  "version": "1.0.0",
+  "description": "Multi Client Chat Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
