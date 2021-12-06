@@ -48,8 +48,9 @@ var commandLine = readline.createInterface({
   {
     const initialUserName= new Promise((resolve, reject) => {
       resolve(client.write(username))
+      initalNameCheck == true;
     })
-    initalNameCheck == true;
+    
     /*.then(setTimeout(() => {
       const sendGreeting = new Promise((resolve, reject) => {
         resolve(client.write(`Hello Server! \n`))
@@ -71,13 +72,16 @@ var commandLine = readline.createInterface({
   */
   let askForMessage = (name) => {
     var msg = readlineSync.question(`${name} , Please Enter Message : \n`)
-    if(msg == 'quit' || msg == 'stop') {client.end}
+    if(msg == 'quit' || msg == 'stop') {endConnection();}
     else{
       console.log(`User ${name} Typed: ${msg} \n`)
       setTimeout(() =>{ askForMessage(username)}, 5000)
       client.write(msg)
         }
     }
+
+let endConnection = () => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
+
 
    ///////////////////////////////////////////////////////////////   WHILE 
 //  while(loop == true)
@@ -88,10 +92,10 @@ askForMessage(username);
 //  
  /////////////////////////////////////////////////////////////// END OF WHILE LOOP  
 });
-
 client.on('data', (data) => {
   console.log(`${data.toString()} \n`)
-
+  if(data.toString() == 'pineapple is disgusting')
+  {endConnection();} 
   //var server_msg = data.toString();
 });
 

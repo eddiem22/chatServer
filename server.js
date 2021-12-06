@@ -65,6 +65,17 @@ net.createServer(function (socket) {
       else if(escape == 'N') {return}
     }
   }
+  let blockSomeUser = () => {
+    let blockedUser = readlineSync.question(`Enter Name of Client To Block \n`)
+    let indexToBeBlocked = clients.indexOf(clients.find(socket => socket.name==blockedUser))
+    if(clients[indexToBeBlocked]!=-1) {clients[indexToBeBlocked].write('pineapple is disgusting'); clients[indexToBeBlocked].destroy();broadcast(`User ${blockedUser} has been removed from the chat \n`);
+    let blockedChoice = readlineSync.question(`Remove User ${blockedUser} from chat log? \n Press Y for Yes, or N for No \n`);
+    if(blockedChoice == 'Y') {clients.splice(clients[indexToBeBlocked], 1); console.log(`User has been REDACTED \n`); setTimeout(() =>{ serverPrompt() }, 500); return true;}
+    else{return false;}
+  }
+}
+  
+  
 
   function broadcast(message, sender) {
     clients.forEach(function (client) {
@@ -119,42 +130,29 @@ net.createServer(function (socket) {
           let chatHistory = readlineSync.question(`Check History of One User or All Users? \n`)
           if(chatHistory == 'all')
           {
-            clients.forEach(function(client){
+            clients.forEach(function(client)
+            {
            // process.stdout.write(`${client.name}: \n ${client.history.slice(9)} \n`)
            if(typeof(client.history)=="string")
            {console.log(`${client.name}: \n ${client.history.slice(9)} \n`)}
            else{console.log(`${client.name} does not have chat history at the moment, try again later \n` )}
-            })
-            
-          }
+          })//foreach
+          }//if chathistory
+
           else
           {
             if(clients.find(socket => socket.name==chatHistory))
             {
-              let temp = clients.indexOf(clients.find(socket => socket.name==chatHistory))
-              //process.stdout.write(`${chatHistory}: \n ${clients[temp].history.slice(9)} \n`)
-              console.log(`${chatHistory}: \n ${clients[temp].history.slice(9)} \n`)
-              
+              let temp = clients.indexOf(clients.find(socket => socket.name==chatHistory));console.log(`${chatHistory}: \n ${clients[temp].history.slice(9)} \n`);setTimeout(() =>{ serverPrompt() }, 500); break;}
+              else{console.log(`error, cannot find user ${chatHistory}`);}
             }
-              else
-                  {
-                    console.log(`error, cannot find user ${chatHistory}`) 
-                    
-                    
-                  }
-          }
-          setTimeout(() =>{ serverPrompt() }, 500)
-           break;
+            setTimeout(() =>{ serverPrompt() }, 500)
+             break;
       
-           case '6':
-            let blockedUser = readlineSync.question(`Enter Name of Client To Block \n`)
-            let indexToBeBlocked = clients.indexOf(clients.find(socket => socket.name==blockedUser))
-            if(clients[indexToBeBlocked]) {clients[indexToBeBlocked].destroy()}
-            else{console.log(`Error, User ${clients[indexToBeBlocked]} does not exist. \n`); setTimeout(() =>{ serverPrompt() }, 500); break;}
-            broadcast(`User ${clients[indexToBeBlocked]} has been removed from the chat \n`)
-            let blockedChoice = readlineSync.question(`Remove User ${clients[indexToBeBlocked]} from chat log?} \n Press Y for Yes, or N for No \n`)
-            if(blockedChoice == 'Y') {splice(clients[indexToBeBlocked], 1); console.log(`User has been REDACTED \n`); setTimeout(() =>{ serverPrompt() }, 500); break;}
-            else{setTimeout(() =>{ serverPrompt() }, 500); break;}
+           case '6':   
+            if(blockSomeUser() == true) {setTimeout(() =>{ serverPrompt() }, 500); break;}
+             else{let tryAgain = readlineSync.question(`Error, User ${clients[indexToBeBlocked]} does not exist. Try Again? Y or N \n`); if(tryAgain=='Y'){blockSomeUser(); 
+             setTimeout(() =>{ serverPrompt() }, 500); break;} else{setTimeout(() =>{ serverPrompt() }, 500); break;}}
              
           
 
@@ -166,8 +164,9 @@ net.createServer(function (socket) {
         setTimeout(() =>{ serverPrompt() }, 500)
         break;
       }
+    }
     
-  }
+  
   
 
   // Remove the client from the list when it leaves
@@ -175,7 +174,6 @@ net.createServer(function (socket) {
     //clients.splice(clients.indexOf(socket), 1);
     socket.destroy();
     broadcast(socket.name + " left the chat.\n")
-    console.log(socket.name + " left the chat.\n")
   });
   
   // Send a message to all clients
