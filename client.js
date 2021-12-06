@@ -80,18 +80,14 @@ var commandLine = readline.createInterface({
         }
     }
 
+
 let endConnection = () => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
 
-
-   ///////////////////////////////////////////////////////////////   WHILE 
-//  while(loop == true)
- // {
- ///////////////////////////////////////////////////////////////   PROMPT USER 
 askForMessage(username);
  ///////////////////////////////////////////////////////////////   PROMPT USER 
-//  
- /////////////////////////////////////////////////////////////// END OF WHILE LOOP  
+
 });
+
 client.on('data', (data) => {
   console.log(`${data.toString()} \n`)
   if(data.toString() == 'pineapple is disgusting')
@@ -105,6 +101,4 @@ client.on('end', () => {
 
  }
 
-//myclient(1, `what's cracking`);
-
-createClient();
+createClient(); //MAIN 
