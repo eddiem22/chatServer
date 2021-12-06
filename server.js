@@ -9,15 +9,13 @@ var readlineSync = require('readline-sync');
   });
 */
 
-// Keep track of the chat clients
-
 var clients = [];
 //var clientIDS = [];
 var tempIndex = 0;
 let forwarding = true;
 let loop = true;
 
-// Start a TCP Server
+
 net.createServer(function (socket) {
    
   socket.on('data', function (data) {
@@ -68,12 +66,11 @@ net.createServer(function (socket) {
 
   function broadcast(message, sender) {
     clients.forEach(function (client) {
-      // Don't want to send it to sender
+
       if (client === sender) return;
       client.write(message);
     });
-    // Log it to the server output too
-    //process.stdout.write(message)
+
     console.log(message);
   }
 
@@ -178,10 +175,8 @@ net.createServer(function (socket) {
     console.log(socket.name + " left the chat.\n")
   });
   
-  // Send a message to all clients
   
 
 }).listen(9898);
 
-// Put a friendly message on the terminal of the server.
 console.log("Chat server running at port 9898\n");
