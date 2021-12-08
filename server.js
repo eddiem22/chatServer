@@ -68,7 +68,7 @@ net.createServer(function (socket) {
     let indexToBeBlocked = clients.indexOf(clients.find(socket => socket.name==blockedUser))
     if(clients[indexToBeBlocked]!=-1) {clients[indexToBeBlocked].write('pineapple is disgusting'); clients[indexToBeBlocked].destroy();broadcast(`User ${blockedUser} has been removed from the chat \n`);
     let blockedChoice = readlineSync.question(`Remove User ${blockedUser} from chat log? \n Press Y for Yes, or N for No \n`);
-    if(blockedChoice == 'Y') {clients.splice(clients[indexToBeBlocked], 1); console.log(`User has been REDACTED \n`); setTimeout(() =>{ serverPrompt() }, 500); return true;}
+    if(blockedChoice == 'Y') {clients.splice(clients[indexToBeBlocked], 1); console.log(`User has been REDACTED \n`); return true;}
     else{return false;}
   }
 }
