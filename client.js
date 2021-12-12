@@ -76,18 +76,18 @@ function ask(questionText) {
   var msg = commandLine.question('Enter Message:')
   client.write(`User ${username} Typed: ${msg}`)
   */
-  let askForMessage = (name) => {
+  let askForMessage = async(name) => {
     var msg = await ask(`${name} , Please Enter Message : \n`)
     if(msg == 'quit' || msg == 'stop') {endConnection();}
     else{
       console.log(`User ${name} Typed: ${msg} \n`)
-      setTimeout(() =>{ askForMessage(username)}, 5000)
       client.write(msg)
+      setTimeout(() =>{ askForMessage(username)}, 5000)
         }
     }
 
 
-let endConnection = () => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
+let endConnection = async() => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
 
 askForMessage(username);
  ///////////////////////////////////////////////////////////////   PROMPT USER 

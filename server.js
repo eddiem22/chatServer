@@ -55,7 +55,7 @@ net.createServer(async function (socket) {
 
  //console.log(clients);
 
-  function sendToOne() {
+  async function sendToOne() {
     var userID = await ask('Enter User ID \n')
     if(userID)
     {
@@ -73,7 +73,7 @@ net.createServer(async function (socket) {
       else if(escape == 'N') {return}
     }
   }
-  let blockSomeUser = () => {
+  let blockSomeUser = async() => {
     let blockedUser = await ask(`Enter Name of Client To Block \n`)
     let indexToBeBlocked = clients.indexOf(clients.find(socket => socket.name==blockedUser))
     if(clients[indexToBeBlocked]!=-1) {clients[indexToBeBlocked].write('pineapple is disgusting'); clients[indexToBeBlocked].destroy();broadcast(`User ${blockedUser} has been removed from the chat \n`);
@@ -85,7 +85,7 @@ net.createServer(async function (socket) {
   
   
 
-  function broadcast(message, sender) {
+  async function broadcast(message, sender) {
     clients.forEach(function (client) {
 
       if (client === sender) return;
