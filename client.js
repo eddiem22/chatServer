@@ -2,7 +2,7 @@
 const net = require('net');
 const { exit } = require('process');
 const readline = require('readline');
-//var readlineSync = require('readline-sync');
+
 
 var commandLine = readline.createInterface({
   input: process.stdin, 
@@ -41,14 +41,6 @@ function ask(questionText) {
 
   var client = net.createConnection({ port: 9898 }, () => {
     
-   /* const sendGreeting = new Promise((resolve, reject) => {
-      resolve(client.write(`Hello Server! \n`));
-  });
-
-    const notifyClientOnJoin = new Promise((resolve, reject) => {
-    resolve(console.log(`User ${username} has joined the chat \n`))
-    });
-*/
 
   if(username && (initalNameCheck == false))
   {
@@ -57,26 +49,8 @@ function ask(questionText) {
       initalNameCheck == true;
       setTimeout(() => {askForMessage(username)}, 500);
     })
-    
-    /*.then(setTimeout(() => {
-      const sendGreeting = new Promise((resolve, reject) => {
-        resolve(client.write(`Hello Server! \n`))
-      })}, 1000)
-    ).then(setTimeout(() => {
-      const notifyClientOnJoin = new Promise((resolve, reject) => {
-        resolve(console.log(`User ${username} has joined the chat \n`))
-        })}, 1000)
-    )
-    */
   }
-
-
-
-  /////////////////////////////INITAL MESSAGE
-  /*
-  var msg = commandLine.question('Enter Message:')
-  client.write(`User ${username} Typed: ${msg}`)
-  */
+    
   let askForMessage = async(name) => {
     var msg = await ask(`${name} , Please Enter Message : \n`)
     if(msg == 'quit' || msg == 'stop') {endConnection();}
@@ -87,9 +61,6 @@ function ask(questionText) {
         }
     }
 
-
-
-
 askForMessage(username);
  ///////////////////////////////////////////////////////////////   PROMPT USER 
 
@@ -98,7 +69,7 @@ askForMessage(username);
 let endConnection = async() => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
 
 client.on('data', (data) => {
-  if(data.toString() == 'pineapple is disgusting')
+  if(data.toString() == 'pineapple is disgusting') //secret password to block user
   {endConnection();} 
   else{console.log(`${data.toString()} \n`)}
   //var server_msg = data.toString();
