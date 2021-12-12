@@ -2,12 +2,6 @@ const net = require('net');
 const readline = require('readline');
 //var readLineSync = require('readline-sync');
 
-
-/*const input = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-*/
 var commandLine = readline.createInterface({
   input: process.stdin, 
   output: process.stdout
