@@ -2,17 +2,23 @@
 const net = require('net');
 const { exit } = require('process');
 const readline = require('readline');
-var readlineSync = require('readline-sync');
+//var readlineSync = require('readline-sync');
 
 var commandLine = readline.createInterface({
   input: process.stdin, 
   output: process.stdout
 });
 
+function ask(questionText) {
+  return new Promise((resolve, reject) => {
+    commandLine.question(questionText, (input) => resolve(input) );
+  });
+}
 
-  function createClient()
+
+  async function createClient()
   {
-    var myName = readlineSync.question('Enter Username \n', {
+    var myName = await ask('Enter Username \n', {
       defaultInput: `user+${Math.random()}`
     });
 
@@ -23,7 +29,7 @@ var commandLine = readline.createInterface({
 
 
 
- function myclient(name) {
+ async function myclient(name) {
 
   let username = name;
 
@@ -71,7 +77,7 @@ var commandLine = readline.createInterface({
   client.write(`User ${username} Typed: ${msg}`)
   */
   let askForMessage = (name) => {
-    var msg = readlineSync.question(`${name} , Please Enter Message : \n`)
+    var msg = await ask(`${name} , Please Enter Message : \n`)
     if(msg == 'quit' || msg == 'stop') {endConnection();}
     else{
       console.log(`User ${name} Typed: ${msg} \n`)
