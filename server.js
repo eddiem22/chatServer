@@ -85,7 +85,7 @@ net.createServer(async function (socket) {
   
   
 
-  async function broadcast(message, sender) {
+  function broadcast(message, sender) {
     clients.forEach(function (client) {
 
       if (client === sender) return;
@@ -102,7 +102,7 @@ net.createServer(async function (socket) {
       case '1':
         //loop = false;
       //break;
-      //setTimeout(() =>{ serverPrompt() }, 1000)
+      setTimeout(() =>{ serverPrompt() }, 500)
       break;
       
         

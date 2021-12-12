@@ -55,6 +55,7 @@ function ask(questionText) {
     const initialUserName= new Promise((resolve, reject) => {
       resolve(client.write(username))
       initalNameCheck == true;
+      setTimeout(() => {askForMessage(username)}, 500);
     })
     
     /*.then(setTimeout(() => {
@@ -82,7 +83,7 @@ function ask(questionText) {
     else{
       console.log(`User ${name} Typed: ${msg} \n`)
       client.write(msg)
-      setTimeout(() =>{ askForMessage(username)}, 5000)
+      setTimeout(() => {askForMessage(username)}, 500);
         }
     }
 
@@ -95,9 +96,9 @@ askForMessage(username);
 });
 
 client.on('data', (data) => {
-  console.log(`${data.toString()} \n`)
   if(data.toString() == 'pineapple is disgusting')
   {endConnection();} 
+  else{console.log(`${data.toString()} \n`)}
   //var server_msg = data.toString();
 });
 
