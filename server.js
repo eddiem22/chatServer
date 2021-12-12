@@ -65,23 +65,30 @@ net.createServer(async function (socket) {
         var userIndex = clients.indexOf(clients.find(socket => socket.name==userID))
         var specificMSG = await ask(`Type MSG to User(${userID}) \n`)
         clients[userIndex].write(`SERVER: ${specificMSG} \n`)
+        setTimeout(() =>{ serverPrompt() }, 500)
     }
     }
     else{
       var escape = await ask('Incorrect UserID. Try Again? \n Y for yes, N for no \n')
       if(escape == 'Y') {sendToOne();}
-      else if(escape == 'N') {return}
+      else if(escape == 'N') {setTimeout(() =>{ serverPrompt() }, 500)}
     }
   }
   let blockSomeUser = async() => {
     let blockedUser = await ask(`Enter Name of Client To Block \n`)
     let indexToBeBlocked = clients.indexOf(clients.find(socket => socket.name==blockedUser))
-    if(clients[indexToBeBlocked]!=-1) {clients[indexToBeBlocked].write('pineapple is disgusting'); clients[indexToBeBlocked].destroy();broadcast(`User ${blockedUser} has been removed from the chat \n`);
+    if(clients[indexToBeBlocked]!=-1) 
+    {
+      clients[indexToBeBlocked].write('pineapple is disgusting');
+     clients[indexToBeBlocked].destroy();
+     broadcast(`User ${blockedUser} has been removed from the chat \n`);
     let blockedChoice = await ask(`Remove User ${blockedUser} from chat log? \n Press Y for Yes, or N for No \n`);
     if(blockedChoice == 'Y') {clients.splice(clients[indexToBeBlocked], 1); console.log(`User has been REDACTED \n`); return true;}
+    else{return true;}
+    }
     else{return false;}
   }
-}
+
   
   
 
@@ -108,8 +115,6 @@ net.createServer(async function (socket) {
         
       case '2':
         sendToOne();
-        //break;
-        setTimeout(() =>{ serverPrompt() }, 500)
         break;
       
       case '3':
@@ -125,8 +130,6 @@ net.createServer(async function (socket) {
       case '4':
         clients.forEach(function(client) {
         console.log(client.name);
-        //console.log(clients)
-        //process.stdout.write(`${client.name} \n`)
         })
         //break;
         setTimeout(() =>{ serverPrompt() }, 500)
@@ -139,7 +142,6 @@ net.createServer(async function (socket) {
           {
             clients.forEach(function(client)
             {
-           // process.stdout.write(`${client.name}: \n ${client.history.slice(9)} \n`)
            if(typeof(client.history)=="string")
            {console.log(`${client.name}: \n ${client.history.slice(9)} \n`)}
            else{console.log(`${client.name} does not have chat history at the moment, try again later \n` )}
@@ -157,9 +159,13 @@ net.createServer(async function (socket) {
              break;
       
            case '6':   
-            if(blockSomeUser() == true) {setTimeout(() =>{ serverPrompt() }, 500); break;}
-             else{let tryAgain = await ask(`Error, User ${clients[indexToBeBlocked]} does not exist. Try Again? Y or N \n`); if(tryAgain=='Y'){blockSomeUser(); 
-             setTimeout(() =>{ serverPrompt() }, 500); break;} else{setTimeout(() =>{ serverPrompt() }, 500); break;}}
+           let tryBlock = blockSomeUser();
+            if(tryBlock) {setTimeout(() =>{ serverPrompt() }, 500); break;}
+             else{let tryAgain = await ask(`Error, User does not exist. Try Again? Y or N \n`); 
+             if(tryAgain=='Y'){blockSomeUser(); setTimeout(() =>{ serverPrompt() }, 500); break;} 
+             else{setTimeout(() =>{ serverPrompt() }, 500); break;}}
+             
+
              
           
 

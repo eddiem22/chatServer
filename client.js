@@ -88,12 +88,14 @@ function ask(questionText) {
     }
 
 
-let endConnection = async() => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
+
 
 askForMessage(username);
  ///////////////////////////////////////////////////////////////   PROMPT USER 
 
 });
+
+let endConnection = async() => {try {client.end();} catch(error) {console.log('ERROR: LOST CONNECTION'); }}
 
 client.on('data', (data) => {
   if(data.toString() == 'pineapple is disgusting')
