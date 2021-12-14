@@ -185,6 +185,6 @@ net.createServer(async function (socket) {
   
   
 
-}).listen(9898);
+}).listen({port:1234, host:'0.0.0.0'});
 
 console.log("Chat server running at port 9898\n");
