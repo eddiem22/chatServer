@@ -39,7 +39,7 @@ function ask(questionText) {
 
   let initalNameCheck = false;
 
-  var client = net.createConnection({ port: 9898 }, () => {
+   var client = net.createConnection({host:"20.124.115.169",port:1234}, () => {
     
 
   if(username && (initalNameCheck == false))
