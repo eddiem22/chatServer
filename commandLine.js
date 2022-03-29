@@ -6,10 +6,4 @@ const readline = require("readline");
     input: process.stdin, output: process.stdout 
   })
   
-  /*
-  commandLine.question('User name:', (name) => {
-    askForMessage(name)
-  })
-*/
-
   module.exports = {commandLine}
